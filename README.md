@@ -4,9 +4,9 @@ The good-old snake game developed for Linux. Frankly,the main goal here was to p
 
 **What are the current features?**
 
--Basic snake movement.
--Collision detection.
--Food generation and growth.
+- Basic snake movement.
+- Collision detection.
+- Food generation and growth.
 
 **How can I try it?**
 

@@ -53,7 +53,6 @@ void Engine::move()
 	std::thread input_thread(&Engine::get_input,this);
 	while(true)
 	{
-		mvprintw(0,0,"tip_y is: %d tip_x is: %d",snake_tip_pos.first,snake_tip_pos.second);
 		refresh();
 		std::this_thread::sleep_for(std::chrono::milliseconds(75));
 		//delete snake's end
@@ -192,7 +191,6 @@ std::pair<int,int> Engine::coordinate_generator()
 		coor_x=rand()%(width-2)+1;
 		it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(coor_y,coor_x));
 	}while(it!=node_positions.end());  //checks if the point(coor_x,coor_y) is overlapped by the snake. if so, re-generates new numbers.
-	mvprintw(1,0,"food_y is: %d food_x is: %d",coor_y,coor_x);
 	return std::make_pair(coor_y,coor_x);
 }
 std::pair<int,int>  Engine::spawn_food()

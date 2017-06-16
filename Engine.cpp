@@ -7,7 +7,6 @@ void Engine::set_values()
 	width=max_x*5/6;
 	start_y=(max_y-height)/2;		//determine the starting point(top left) of the box.
 	start_x=(max_x-width)/2;
-	mvprintw(2,0,"start_y: %d start_x: %d height: %d width: %d",start_y,start_x,height,width);
 }
 
 void Engine::create_new_win()

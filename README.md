@@ -34,6 +34,7 @@ This game has a lot to improve. Here's a list of what I'll be adding in the futu
 - Different food types. Foods with greater growth bonus and limited time.
 - Speed boost. User will be able to boost the snake's movement speed by holding a specific button.
 - Option to restart the game once it ends.
+- Improve snake's responsivity.
 
 Apart from in-game improvements, I'll try to improve the code's overall readability and ,possibly, its efficiency.
 

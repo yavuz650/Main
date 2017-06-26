@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 #include "Engine.hpp"
-=======
-#include "Engine.h"
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 
 void Engine::set_values()
 {
@@ -11,12 +7,9 @@ void Engine::set_values()
 	width=max_x*5/6;
 	start_y=(max_y-height)/2;		//determine the starting point(top left) of the box.
 	start_x=(max_x-width)/2;
-<<<<<<< HEAD
 	total_score=0;
 	is_game_over=false;
 	is_condition_met=false;
-=======
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 }
 
 void Engine::create_new_win()
@@ -27,7 +20,6 @@ void Engine::create_new_win()
 	wrefresh(local_win);
 }
 
-<<<<<<< HEAD
 void Engine::initialize_game()
 {
 	this->set_values();
@@ -71,16 +63,11 @@ void Engine::initialize_game()
 void Engine::end_game()
 {
 	is_game_over=true;
-=======
-void Engine::end_game()
-{
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 	for(int i=0;i<length;i++)
 	{
 		mvwchgat(local_win,node_positions[i].first,node_positions[i].second,1,A_BLINK,1,NULL);
 	}
 	wrefresh(local_win);
-<<<<<<< HEAD
 	mvprintw(0,max_x/2-6,"GAME OVER. Press 'Enter' to continue.");
 	refresh();
 	std::unique_lock<std::mutex> local_lock(main_mutex);
@@ -92,11 +79,6 @@ void Engine::end_game()
 	mvprintw(max_y/2+1,max_x/2-4,"Press 'R' to restart the game.");
 	mvprintw(max_y/2+2,max_x/2-4,"Press any other key to quit.");
 	refresh();
-=======
-	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-	delwin(local_win);
-	endwin();
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 }
 
 void Engine::initialize_snake()
@@ -111,12 +93,8 @@ void Engine::initialize_snake()
 		node_positions.emplace_front(std::make_pair(y,x));	//initialize node positions.
 	}
 	wrefresh(local_win);
-<<<<<<< HEAD
 	back_dir=right;
 	tip_dir=right;
-=======
-	back_dir=right,tip_dir=right;
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 	grow_amount=0;
 	snake_back_pos=std::make_pair(snake_start_y,snake_start_x);
 	snake_tip_pos=std::make_pair(snake_start_y,snake_start_x+length-1);		//coordinates of the tip.  (y,x) format.
@@ -124,7 +102,6 @@ void Engine::initialize_snake()
 void Engine::move()
 {
 	std::pair<int,int> food_position=this->spawn_food();
-<<<<<<< HEAD
 	while(!is_game_over)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(snake_speed));
@@ -132,17 +109,6 @@ void Engine::move()
 		if(grow_amount==0)
 		{
 			mvwaddch(local_win,snake_back_pos.first,snake_back_pos.second,' '); //delete snake's end
-=======
-	std::thread input_thread(&Engine::get_input,this);
-	while(true)
-	{
-		refresh();
-		std::this_thread::sleep_for(std::chrono::milliseconds(75));
-		//delete snake's end
-		if(grow_amount==0)
-		{
-			mvwaddch(local_win,snake_back_pos.first,snake_back_pos.second,' ');
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 			if(!turning_points.empty())		//if the queue is not empty, this means there is at least one turning point.
 			{
 				if(snake_back_pos.first==std::get<0>(turning_points.front()) && snake_back_pos.second==std::get<1>(turning_points.front()))	//if the snake's back position is on a turning point, then change back's direction
@@ -151,12 +117,7 @@ void Engine::move()
 					turning_points.pop();	//snake has turned. remove the turning point.
 				}
 			}
-<<<<<<< HEAD
 			switch(back_dir) //update end's position
-=======
-			//update end's position
-			switch(back_dir)
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 			{
 				case left:
 				snake_back_pos.second-=1;
@@ -177,17 +138,12 @@ void Engine::move()
 		{ 
 			grow_amount--,length++;
 		}
-<<<<<<< HEAD
 
-=======
-		//extend the tip and update its position
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 		switch(tip_dir)
 		{
 			case left:
 			{
 				auto it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(snake_tip_pos.first,snake_tip_pos.second-1)); //before advancing the tip, we need to see if it collides with other parts of the snake.
-<<<<<<< HEAD
 				if(it!=node_positions.end() || snake_tip_pos.second+start_x-1==start_x) 
 				{
 					this->end_game();	//collision detected. end the game.
@@ -201,18 +157,12 @@ void Engine::move()
 					food_position=this->spawn_food();	//respawn another food.
 				} 
 				mvwaddch(local_win,snake_tip_pos.first,snake_tip_pos.second-1,'+');	//extend the tip
-=======
-				if(it!=node_positions.end() || snake_tip_pos.second+start_x-1==start_x) {this->end_game();}	//collision detected. end the game.
-				if(std::make_pair(snake_tip_pos.first,snake_tip_pos.second-1)==food_position) {this->grow(2);food_position=this->spawn_food();} //ate a food? then grow... respawn another food.
-				mvwaddch(local_win,snake_tip_pos.first,snake_tip_pos.second-1,'+');
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 				snake_tip_pos.second-=1;
 				break;
 			}
 			case right:
 			{
 				auto it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(snake_tip_pos.first,snake_tip_pos.second+1));
-<<<<<<< HEAD
 				if(it!=node_positions.end() || snake_tip_pos.second+start_x+2==(start_x+width)) 
 				{
 					this->end_game();
@@ -225,10 +175,6 @@ void Engine::move()
 					mvprintw(1,max_x/2,"Score: %d",total_score);
 					food_position=this->spawn_food();
 				} 
-=======
-				if(it!=node_positions.end() || snake_tip_pos.second+start_x+2==(start_x+width)) {this->end_game();}
-				if(std::make_pair(snake_tip_pos.first,snake_tip_pos.second+1)==food_position) {this->grow(2);food_position=this->spawn_food();} 
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 				mvwaddch(local_win,snake_tip_pos.first,snake_tip_pos.second+1,'+');
 				snake_tip_pos.second+=1;
 				break;
@@ -236,7 +182,6 @@ void Engine::move()
 			case down:
 			{
 				auto it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(snake_tip_pos.first+1,snake_tip_pos.second));
-<<<<<<< HEAD
 				if(it!=node_positions.end() || snake_tip_pos.first+start_y+2==(start_y+height)) 
 				{
 					this->end_game();
@@ -249,10 +194,6 @@ void Engine::move()
 					mvprintw(1,max_x/2,"Score: %d",total_score);
 					food_position=this->spawn_food();
 				} 
-=======
-				if(it!=node_positions.end() || snake_tip_pos.first+start_y+2==(start_y+height)) {this->end_game();}
-				if(std::make_pair(snake_tip_pos.first+1,snake_tip_pos.second)==food_position) {this->grow(2);food_position=this->spawn_food();} 
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 				mvwaddch(local_win,snake_tip_pos.first+1,snake_tip_pos.second,'+');
 				snake_tip_pos.first+=1;
 				break;
@@ -260,7 +201,6 @@ void Engine::move()
 			case up:
 			{
 				auto it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(snake_tip_pos.first-1,snake_tip_pos.second));
-<<<<<<< HEAD
 				if(it!=node_positions.end() || snake_tip_pos.first+start_y-1==start_y) 
 				{
 					this->end_game();
@@ -273,26 +213,18 @@ void Engine::move()
 					mvprintw(1,max_x/2,"Score: %d",total_score);
 					food_position=this->spawn_food();
 				} 
-=======
-				if(it!=node_positions.end() || snake_tip_pos.first+start_y-1==start_y) {this->end_game();}
-				if(std::make_pair(snake_tip_pos.first-1,snake_tip_pos.second)==food_position) {this->grow(2);food_position=this->spawn_food();} 
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 				mvwaddch(local_win,snake_tip_pos.first-1,snake_tip_pos.second,'+');
 				snake_tip_pos.first-=1;
 				break;
 			}
 		}
 		node_positions.emplace_front(snake_tip_pos.first,snake_tip_pos.second);
-<<<<<<< HEAD
 		refresh();
-=======
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 		wrefresh(local_win);
 	}
 }
 void Engine::get_input()
 {
-<<<<<<< HEAD
 	while(true)
 	{	
 		std::this_thread::sleep_for(std::chrono::milliseconds(55));
@@ -313,18 +245,6 @@ void Engine::get_input()
 			this->end_game();
 		}
 		else if(tip_dir==right || tip_dir==left)		//snake is moving in a horizontal path, thus it can only turn up or down
-=======
-	int input;
-	while(true)
-	{	
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-		input=getch();
-		if(input=='q')
-		{
-			this->end_game();
-		}
-		if(tip_dir==right || tip_dir==left)		//snake is moving in a horizontal path, thus it can only turn up or down
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 		{
 			switch(input)
 			{
@@ -338,11 +258,7 @@ void Engine::get_input()
 				break;
 			}
 		}
-<<<<<<< HEAD
 		else if(tip_dir==up || tip_dir==down)
-=======
-		else
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 		{
 			switch(input)
 			{
@@ -357,10 +273,6 @@ void Engine::get_input()
 			}
 		}
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 } 
 
 void Engine::grow(int num)
@@ -378,30 +290,13 @@ std::pair<int,int> Engine::coordinate_generator()
 		coor_x=rand()%(width-2)+1;
 		it=std::find(node_positions.begin(),node_positions.end(),std::make_pair(coor_y,coor_x));
 	}while(it!=node_positions.end());  //checks if the point(coor_x,coor_y) is overlapped by the snake. if so, re-generates new numbers.
-<<<<<<< HEAD
 
-=======
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 	return std::make_pair(coor_y,coor_x);
 }
 std::pair<int,int>  Engine::spawn_food()
 {
 	std::pair<int,int> food_coordinates=this->coordinate_generator();
 	mvwaddch(local_win,food_coordinates.first,food_coordinates.second,'$');
-<<<<<<< HEAD
 
 	return food_coordinates;
-}														   
-=======
-	return food_coordinates;
-}														   
-
-void Engine::initialize_game()
-{
-	this->set_values();
-	this->create_new_win();
-	this->initialize_snake();
-	this->move();
-}
-
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
+} 

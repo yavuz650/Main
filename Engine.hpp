@@ -1,17 +1,11 @@
-<<<<<<< HEAD
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
-=======
-#ifndef ENGINE_H
-#define ENGINE_H
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 
 #include <ncurses.h>
 #include <tuple>
 #include <chrono>
 #include <thread>
 #include <queue>
-<<<<<<< HEAD
 #include <utility>
 #include <deque>
 #include <algorithm>
@@ -19,20 +13,11 @@
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
-=======
-#include <exception>
-#include <utility>
-#include <deque>
-#include <algorithm>
-#include <atomic>
-#include <cstdlib>
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
 
 class Engine
 {
 private:
 	WINDOW *local_win;
-<<<<<<< HEAD
 	void set_values();		//Sets the parameters(width,height,starting positions etc.) of the windows that's going be created next.
 	void create_new_win();		//Creates a new window and boxes it.
 	void initialize_snake();	//Initializes the snake by placing it in within the box and setting its values(back_dir,tip_dir,length,speed etc.).
@@ -66,28 +51,3 @@ public:
 };
 
 #endif
-=======
-	void create_new_win();
-	void move();
-	void get_input();
-	void initialize_snake();
-	void set_values();
-	void grow(int);
-	std::pair<int,int> coordinate_generator();
-	std::pair<int,int> spawn_food();
-	std::pair<int,int> snake_tip_pos;
-	std::pair<int,int> snake_back_pos;
-	enum directions{left,right,up,down};
-	directions back_dir,tip_dir;
-	int length;
-	std::atomic<int> grow_amount;
-	int height,width,start_y,start_x,max_x,max_y;
-	std::queue<std::tuple<int,int,directions>> turning_points; 	// this queue will store the turning points of the snake's movement. tuple's format is (y,x,direction)
-	std::deque<std::pair<int,int>> node_positions; 	// stores every single node of the snake's position. this is needed for collision detection. (y,x)
-public:
-	void end_game();
-	void initialize_game();
-};
-
-#endif
->>>>>>> ab81c90c4719b570b1d1b48d3e2ac5edd6ff63df
